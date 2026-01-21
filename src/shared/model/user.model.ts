@@ -9,6 +9,7 @@ type Image = {
 
 type Post = {
     creatorUuid: string,
+    creatorUsername?: string,
     message: string,
     date: string,
     images: Image[]
