@@ -1,0 +1,8 @@
+.atomic-button {
+    min-width: 10rem;
+    min-height: 2rem;
+}
+
+.atomic-button:hover {
+    cursor: pointer;
+}
