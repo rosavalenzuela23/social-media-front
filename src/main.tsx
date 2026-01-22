@@ -1,3 +1,4 @@
+import '../node_modules/bootstrap-icons/font/bootstrap-icons.min.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import router from './pages/routes'

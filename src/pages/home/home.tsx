@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import type { Post } from '../../shared/model/user.model';
+import Input from '../../atoms/input/input.atom';
+import PostMolecule from '../../molecules/post/post.molecule';
 
 function App() {
     const [message, setMessage] = useState('');
@@ -63,10 +65,7 @@ function App() {
 
             {posts.map((post) => {
                 return (
-                    <div key={post.date}>
-                        <h2>{post.creatorUsername || "No name"}</h2>
-                        <p>{post.message}</p>
-                    </div>
+                    <PostMolecule post={post} />
                 )
             })}
 

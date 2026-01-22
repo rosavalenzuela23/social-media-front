@@ -1,13 +1,14 @@
 import './button.css'
 
 type ButtonProps = {
-    buttonText: string
+    buttonText?: string,
+    children: React.ReactNode,
 }
 
-export default function Button({ buttonText }: ButtonProps) {
+export default function Button({ children }: ButtonProps) {
     return (
         <button className='atomic-button'>
-            {buttonText || "Button"}
+            { children }
         </button>
     )
 }
