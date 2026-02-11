@@ -1,11 +1,36 @@
-<script setup lang="ts"></script>
+<script setup async lang="ts">
+import axios from 'axios';
+import { onMounted } from 'vue';
+import { RouterView } from 'vue-router';
+
+
+onMounted(async () => {
+  const response = await axios.get("http://localhost:3000/api/profiles/me", {
+    withCredentials: true
+  })
+
+  if (!response.data) {
+    const name = prompt("Please give a name to your new profile");
+
+    if (!name) {
+      alert("Please enter a name")
+    } else {
+      await axios.post("http://localhost:3000/api/profiles/me", {
+        name
+      }, {
+        withCredentials: true
+      })
+    }
+
+  }
+})
+
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <Suspense>
+    <RouterView></RouterView>
+  </Suspense>
 </template>
 
 <style scoped></style>
