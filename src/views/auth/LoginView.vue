@@ -1,24 +1,19 @@
 <script setup lang="ts">
-import axios from 'axios';
+import AuthService from '@/services/auth.service';
 import { ref } from 'vue';
-const apiUrl = 'http://localhost:3000';
+
+const authService = AuthService.getInstance();
 
 const password = ref("")
 const username = ref("")
 
 const registerUser = async (event: SubmitEvent) => {
     event.preventDefault();
-
-    await axios.post(`${apiUrl}/api/users/login/`, {
-        username: username.value,
-        password: password.value
-    }, {
-        withCredentials: true
-    });
+    await authService.login(username.value, password.value)
 }
 
 </script>
- 
+
 <template>
 
     <form @submit="registerUser($event)">

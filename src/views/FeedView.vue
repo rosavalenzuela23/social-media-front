@@ -1,20 +1,37 @@
 <script async setup lang="ts">
-import axios from 'axios';
+import type { Post } from '@/services/dto/post.dto';
+import PostService from '@/services/posts.service';
+import { onMounted, reactive, ref } from 'vue';
 
+const postsService = PostService.getInstance();
 
-const posts = await axios.get("http://localhost:3000/api/posts/", {
-    withCredentials: true,
-    params: {
-        page: 1,
-        size: 10
-    }
+const posts = reactive<Post[]>([])
+const content = ref("");
+
+async function createPostEvent(submitEvent: SubmitEvent) {
+    submitEvent.preventDefault();
+    await postsService.createPost(content.value)
+}
+
+onMounted(async () => {
+    posts.push(...await postsService.getPosts())
 })
-
-console.log(posts)
 
 </script>
 
 
 <template>
-    <b></b>
+    <form @submit="createPostEvent">
+        <textarea name="" id="" v-model="content">
+            En que estas pensando!
+        </textarea>
+        <button>
+            Crear post
+        </button>
+    </form>
+
+    <div v-for="post in posts" :key="post.creatorUuid">
+        {{ post.message }}
+    </div>
+
 </template>

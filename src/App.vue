@@ -1,28 +1,32 @@
 <script setup async lang="ts">
-import axios from 'axios';
 import { onMounted } from 'vue';
-import { RouterView } from 'vue-router';
+import { RouterView, useRouter } from 'vue-router';
+import ProfileService from './services/profile.service';
 
+const router = useRouter();
+
+const profileService = ProfileService.getInstance();
 
 onMounted(async () => {
-  const response = await axios.get("http://localhost:3000/api/profiles/me", {
-    withCredentials: true
-  })
 
-  if (!response.data) {
-    const name = prompt("Please give a name to your new profile");
+  try {
+    const myProfile = await profileService.getMyProfile();
 
-    if (!name) {
-      alert("Please enter a name")
-    } else {
-      await axios.post("http://localhost:3000/api/profiles/me", {
-        name
-      }, {
-        withCredentials: true
-      })
+    if (!myProfile) {
+      const name = prompt("What is your name?");
+      if (!name) {
+        alert("Please enter a name")
+        window.location.reload();
+        return;
+      }
+      await profileService.createProfile(name);
     }
 
+  } catch {
+    router.push("/login")
+    return;
   }
+
 })
 
 </script>
