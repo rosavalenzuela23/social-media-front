@@ -1,6 +1,7 @@
 <script async setup lang="ts">
 import type { Post } from '@/services/dto/post.dto';
 import PostService from '@/services/posts.service';
+import PostComponent from '@/shared/components/PostComponent.vue';
 import { onMounted, reactive, ref } from 'vue';
 
 const postsService = PostService.getInstance();
@@ -21,17 +22,20 @@ onMounted(async () => {
 
 
 <template>
-    <form @submit="createPostEvent">
-        <textarea name="" id="" v-model="content">
+    <!-- <form @submit="createPostEvent">
+        <textarea name="" id="" v-model="content" class="form-control">
             En que estas pensando!
         </textarea>
-        <button>
+        <button class="btn btn-primary">
             Crear post
         </button>
-    </form>
+    </form> -->
 
-    <div v-for="post in posts" :key="post.creatorUuid">
-        {{ post.message }}
+    <div class="container-fluid w-100 justify-content-center">
+        <PostComponent :key="post.creatorUuid" class="mt-4" v-for="post in posts" :creator-name="post.creatorUuid"
+            :creator-profile-picture-url="post.creatorUuid" :post-content="post.message" />
+        <!-- <div v-for="post in posts" :key="post.creatorUuid">
+            {{ post.message }}
+        </div> -->
     </div>
-
 </template>

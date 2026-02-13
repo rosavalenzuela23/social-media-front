@@ -23,6 +23,8 @@ export default class AuthService {
       const res = await axios.post(`${this.authApi}/users/login/`, {
         username,
         password,
+      }, {
+        withCredentials: true,
       });
 
       const message = res.data.message;
